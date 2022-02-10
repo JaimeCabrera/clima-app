@@ -15,7 +15,7 @@ const InitialState = {
 
 export interface InterfaceResultWeather {
   name: string;
-  weather: InterfaceWeather;
+  weather: [InterfaceWeather];
   main: InterfaceMain;
 }
 export interface InterfaceWeather {
@@ -36,6 +36,8 @@ const App = () => {
   const [weatherResult, setWheaterResult] =
     useState<InterfaceResultWeather>(Object);
 
+  const [bgColor, setBgColor] = useState('#8ec1dd');
+
   // dest4ruvcutrinm para obetner los datoas de la ciuda dy pais
   const {ciudad, pais} = search;
 
@@ -51,6 +53,16 @@ const App = () => {
           setWheaterResult(res.data);
           setConsult(false);
           setSearch(InitialState);
+          // moddify background color app
+          const {main} = weatherResult;
+          const actual = main.temp - 273.15;
+          if (actual < 10) {
+            setBgColor('#aeb6bf');
+          } else if (actual >= 10 && actual < 25) {
+            setBgColor('#8ec1dd');
+          } else {
+            setBgColor('#d35400');
+          }
         } catch (error: any) {
           showToastWithGravity(`${error.message}, Please connect to Internet`);
         }
@@ -70,8 +82,13 @@ const App = () => {
     );
   };
 
+  // para teber un bgcolor variable
+  const bgColorApp = {
+    backgroundColor: bgColor,
+  };
+
   return (
-    <View style={styles.app}>
+    <View style={[styles.app, bgColorApp]}>
       <View style={styles.content}>
         <Clima weatherResult={weatherResult} />
         <Form search={search} setSearch={setSearch} setConsult={setConsult} />
@@ -82,7 +99,7 @@ const App = () => {
 const styles = StyleSheet.create({
   app: {
     flex: 1,
-    backgroundColor: '#8ec1dd',
+    // backgroundColor: '#8ec1dd',
     justifyContent: 'center',
   },
   content: {
