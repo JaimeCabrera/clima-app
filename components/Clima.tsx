@@ -38,7 +38,7 @@ export const Clima = ({weatherResult}: Props) => {
           </Text>
         </Text>
       </View>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.text}>Ciudad: {name}</Text>
     </View>
   );
 };

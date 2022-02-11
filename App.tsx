@@ -49,22 +49,13 @@ const App = () => {
 
         try {
           const res = await axios.get(URL);
-          console.log(res.data);
           setWheaterResult(res.data);
+          // moddify background color app
+          changeBackgroundColor(res.data);
           setConsult(false);
           setSearch(InitialState);
-          // moddify background color app
-          const {main} = weatherResult;
-          const actual = main.temp - 273.15;
-          if (actual < 10) {
-            setBgColor('#aeb6bf');
-          } else if (actual >= 10 && actual < 25) {
-            setBgColor('#8ec1dd');
-          } else {
-            setBgColor('#d35400');
-          }
         } catch (error: any) {
-          showToastWithGravity(`${error.message}, Please connect to Internet`);
+          showToastWithGravity(`${error.message}`);
         }
       }
     };
@@ -87,6 +78,18 @@ const App = () => {
     backgroundColor: bgColor,
   };
 
+  // function lo change bd colog
+  const changeBackgroundColor = (result: InterfaceResultWeather) => {
+    const {main} = result;
+    const actual = main.temp - 273.15;
+    if (actual < 10) {
+      return setBgColor('#aeb6bf');
+    } else if (actual >= 10 && actual < 25) {
+      return setBgColor('#8ec1dd');
+    } else {
+      return setBgColor('#d35400');
+    }
+  };
   return (
     <View style={[styles.app, bgColorApp]}>
       <View style={styles.content}>
