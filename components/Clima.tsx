@@ -8,43 +8,50 @@ interface Props {
 
 export const Clima = ({weatherResult}: Props) => {
   const {name, main, weather} = weatherResult;
-  if (!name) {
-    return null;
-  }
+  // if (!name) {
+  //   return null;
+  // }
 
   return (
     <View style={styles.weather}>
-      <Text style={styles.weatherText}>
-        {Math.trunc(main.temp - 273.15)}
-        <Text style={styles.temp}>&#x2103;</Text>
-        <Image
-          style={styles.weatherImage}
-          source={{
-            uri: `http://openweathermap.org/img/w/${weather[0].icon}.png`,
-          }}
-        />
-      </Text>
-      <View style={styles.temps}>
-        <Text style={styles.text}>
-          Max:{' '}
-          <Text style={styles.tempMax}>
-            {Math.trunc(main.temp_min - 273.15)}&#x2103;
+      {name && (
+        <>
+          <Text style={styles.weatherText}>
+            {Math.trunc(main.temp - 273.15)}
+            <Text style={styles.temp}>&#x2103;</Text>
+            <Image
+              style={styles.weatherImage}
+              source={{
+                uri: `http://openweathermap.org/img/w/${weather[0].icon}.png`,
+              }}
+            />
           </Text>
-        </Text>
-        <Text style={styles.text}>
-          Min:{' '}
-          <Text style={styles.tempMax}>
-            {Math.trunc(main.temp_max - 273.15)}&#x2103;
-          </Text>
-        </Text>
-      </View>
-      <Text style={styles.text}>Ciudad: {name}</Text>
+          <View style={styles.temps}>
+            <Text style={styles.text}>
+              Max:{' '}
+              <Text style={styles.tempMax}>
+                {Math.trunc(main.temp_min - 273.15)}&#x2103;
+              </Text>
+            </Text>
+            <Text style={styles.text}>
+              Min:{' '}
+              <Text style={styles.tempMax}>
+                {Math.trunc(main.temp_max - 273.15)}&#x2103;
+              </Text>
+            </Text>
+          </View>
+          <Text style={styles.text}>Ciudad: {name}</Text>
+        </>
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
   weather: {
-    marginBottom: 20,
+    // marginBottom: 10,
+    padding: 10,
+    height: 250,
+    backgroundColor: 'rgba(41, 128, 185  ,.5)',
   },
   text: {
     color: '#fff',

@@ -126,71 +126,72 @@ export const Form = ({search, setSearch, setConsult}: Props) => {
             onChangeText={ciudad => setSearch({...search, ciudad})}
             style={styles.input}
             placeholder="Ciudad"
-            placeholderTextColor="#808b96"
+            placeholderTextColor="#5D6D7E"
           />
         </View>
+        <View>
+          <Picker
+            style={styles.picker}
+            selectedValue={pais}
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            onValueChange={pais => setSearch({...search, pais})}>
+            <Picker.Item label="Seleccione su pais" value="" />
+            {countries.map(country => {
+              return (
+                <Picker.Item
+                  key={country.alpha2Code}
+                  label={country.name}
+                  value={country.alpha2Code}
+                />
+              );
+            })}
+          </Picker>
+        </View>
+        <TouchableWithoutFeedback
+          onPress={() => searchWeather()}
+          onPressIn={() => animateIn()}
+          onPressOut={() => animateOut()}>
+          <Animated.View style={[styles.btnSearch, animationStyle]}>
+            <Text style={styles.btnTextSearch}>Consultar clima</Text>
+          </Animated.View>
+        </TouchableWithoutFeedback>
       </View>
-      <View>
-        <Picker
-          style={styles.picker}
-          selectedValue={pais}
-          // eslint-disable-next-line @typescript-eslint/no-shadow
-          onValueChange={pais => setSearch({...search, pais})}>
-          <Picker.Item label="Seleccione su pais" value="" />
-          {countries.map(country => {
-            return (
-              <Picker.Item
-                key={country.alpha2Code}
-                label={country.name}
-                value={country.alpha2Code}
-              />
-            );
-          })}
-        </Picker>
-      </View>
-      <TouchableWithoutFeedback
-        onPress={() => searchWeather()}
-        onPressIn={() => animateIn()}
-        onPressOut={() => animateOut()}>
-        <Animated.View style={[styles.btnSearch, animationStyle]}>
-          <Text style={styles.btnTextSearch}>Clima</Text>
-        </Animated.View>
-      </TouchableWithoutFeedback>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: 30,
+    // marginTop: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: 'rgba(41, 128, 185,.5)',
+    flex: 1,
   },
   input: {
     padding: 10,
-    height: 50,
-    backgroundColor: '#fff',
-    fontSize: 20,
+    height: 40,
+    backgroundColor: 'rgba(212, 230, 241,.5)',
+    fontSize: 16,
     marginBottom: 20,
     textAlign: 'center',
     borderRadius: 4,
   },
   picker: {
-    backgroundColor: '#fff',
-    height: 50,
-    color: '#5d6d7e',
+    backgroundColor: 'rgba(212, 230, 241,.5)',
+    color: '#34495E',
     marginBottom: 30,
-    borderRadius: 4,
   },
   btnSearch: {
-    marginTop: 50,
-    backgroundColor: '#2874a6',
-    padding: 14,
+    marginTop: 30,
+    backgroundColor: '#1B4F72',
+    padding: 10,
     borderRadius: 6,
     justifyContent: 'center',
   },
   btnTextSearch: {
     color: '#fff',
     textAlign: 'center',
-    textTransform: 'uppercase',
-    fontSize: 18,
+    fontSize: 16,
   },
 });

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, ToastAndroid, View} from 'react-native';
+import {ImageBackground, StyleSheet, ToastAndroid, View} from 'react-native';
 import axios from 'axios';
 import {Form} from './components/Form';
 import {Clima} from './components/Clima';
@@ -36,10 +36,14 @@ const App = () => {
   const [weatherResult, setWheaterResult] =
     useState<InterfaceResultWeather>(Object);
 
-  const [bgColor, setBgColor] = useState('#8ec1dd');
+  // const [bgColor, setBgColor] = useState('#8ec1dd');
 
   // dest4ruvcutrinm para obetner los datoas de la ciuda dy pais
   const {ciudad, pais} = search;
+
+  const image = {
+    uri: 'https://uc202c0805e146608f5953f6404a.previews.dropboxusercontent.com/p/thumb/ABdzetzMukMDb2xOcOdV_6PdXlel1bdlZvQ936Y6TgMxgY6pr_LtQQzGGezgHtbvxd12FnZeYjsVDJ3uDyp8zzHpS667qLUda7H3K9Jm56ivHghDLCQStOQqSeYpgTeyzv6_7E1BnJ-eEJPZd8ZMBcRsoO1453RBrI_NAmrn3dnvXA_WZ4qutqmsFKhgDhhpDa4b6lw2GFGmcjGknWfYvv0lxv4MUZ4-T8AxvM5FrriE3ZgkPgiZLXZfGjE9YEffXmCrsWY2mf6CkYCHbx6Z9wRz6wxd4FUAonp4lBDhCpp73kyHoQmZJjj6AfVGVIWkMkFZUGgPK5bog3EZomSjFsV94XhM9-llpMYR5S-BN6ggD6Ip6YKOzUivQruNdw6GDK20vMaiTwoQHDJK_195BvBM/p.jpeg?size=2048x1536&size_mode=3',
+  };
 
   useEffect(() => {
     const getWhater = async () => {
@@ -51,7 +55,7 @@ const App = () => {
           const res = await axios.get(URL);
           setWheaterResult(res.data);
           // moddify background color app
-          changeBackgroundColor(res.data);
+          // changeBackgroundColor(res.data);
           setConsult(false);
           setSearch(InitialState);
         } catch (error: any) {
@@ -75,27 +79,29 @@ const App = () => {
 
   // para teber un bgcolor variable
   const bgColorApp = {
-    backgroundColor: bgColor,
+    backgroundColor: '#8ec1dd',
   };
 
   // function lo change bd colog
-  const changeBackgroundColor = (result: InterfaceResultWeather) => {
-    const {main} = result;
-    const actual = main.temp - 273.15;
-    if (actual < 10) {
-      return setBgColor('#aeb6bf');
-    } else if (actual >= 10 && actual < 25) {
-      return setBgColor('#8ec1dd');
-    } else {
-      return setBgColor('#d35400');
-    }
-  };
+  // const changeBackgroundColor = (result: InterfaceResultWeather) => {
+  //   const {main} = result;
+  //   const actual = main.temp - 273.15;
+  //   if (actual < 10) {
+  //     return setBgColor('#aeb6bf');
+  //   } else if (actual >= 10 && actual < 25) {
+  //     return setBgColor('#8ec1dd');
+  //   } else {
+  //     return setBgColor('#d35400');
+  //   }
+  // };
   return (
     <View style={[styles.app, bgColorApp]}>
-      <View style={styles.content}>
-        <Clima weatherResult={weatherResult} />
-        <Form search={search} setSearch={setSearch} setConsult={setConsult} />
-      </View>
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        <View style={styles.content}>
+          <Clima weatherResult={weatherResult} />
+          <Form search={search} setSearch={setSearch} setConsult={setConsult} />
+        </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -105,8 +111,13 @@ const styles = StyleSheet.create({
     // backgroundColor: '#8ec1dd',
     justifyContent: 'center',
   },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   content: {
-    marginHorizontal: 16,
+    marginHorizontal: 0,
+    flex: 1,
   },
 });
 
